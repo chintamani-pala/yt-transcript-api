@@ -3,11 +3,11 @@
 </h1>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/youtube-transcript-api-js">
-    <img src="https://img.shields.io/npm/v/youtube-transcript-api-js.svg" alt="NPM Version">
+  <a href="https://www.npmjs.com/package/youtube-transcript-js">
+    <img src="https://img.shields.io/npm/v/youtube-transcript-js.svg" alt="NPM Version">
   </a>
-  <a href="https://www.npmjs.com/package/youtube-transcript-api-js">
-    <img src="https://img.shields.io/npm/dm/youtube-transcript-api-js.svg" alt="NPM Downloads">
+  <a href="https://www.npmjs.com/package/youtube-transcript-js">
+    <img src="https://img.shields.io/npm/dm/youtube-transcript-js.svg" alt="NPM Downloads">
   </a>
 </p>
 
@@ -35,7 +35,7 @@
 ## Installation
 
 ```bash
-npm install youtube-transcript-api-js
+npm install youtube-transcript-js
 ```
 
 Or clone this repository and install dependencies:
@@ -63,7 +63,7 @@ const {
   formatters,
   errors,
   settings
-} = require('youtube-transcript-api-js');
+} = require('youtube-transcript-js');
 
 const ytt_api = new YouTubeTranscriptApi();
 const video_id = '0Okxsszt624';
@@ -92,7 +92,7 @@ ytt_api.fetch(video_id, ['en']).then(transcript => {
 You can use the CLI to fetch transcripts directly from the terminal.
 
 ```bash
-npx youtube-transcript-api --video-ids=0Okxsszt624 --format=json
+npx youtube-transcript-js --video-ids=0Okxsszt624 --format=json
 ```
 
 #### CLI Options
@@ -112,7 +112,7 @@ npx youtube-transcript-api --video-ids=0Okxsszt624 --format=json
 #### Example
 
 ```bash
-npx youtube-transcript-api --video-ids=0Okxsszt624 --format=json
+npx youtube-transcript-js --video-ids=0Okxsszt624 --format=json
 ```
 
 ---
@@ -125,7 +125,7 @@ Supports generic HTTP/HTTPS proxies and [Webshare](https://www.webshare.io/) rot
 Example:
 
 ```js
-const { GenericProxyConfig, YouTubeTranscriptApi } = require('youtube-transcript-api-js');
+const { GenericProxyConfig, YouTubeTranscriptApi } = require('youtube-transcript-js');
 const proxyConfig = new GenericProxyConfig('http://your-proxy:port');
 const ytt_api = new YouTubeTranscriptApi({ proxyConfig });
 ```
