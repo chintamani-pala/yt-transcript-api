@@ -1,5 +1,5 @@
 <h1 align="center">
-  ✨ YouTube Transcript API JS ✨
+  ✨ YT-TRANSCRIPT-API ✨
 </h1>
 
 <p align="center">
