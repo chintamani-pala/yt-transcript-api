@@ -1,6 +1,6 @@
 {
   "name": "yt-transcript-api",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A lightweight JavaScript API and CLI for retrieving YouTube video transcripts and subtitles (including auto-generated and translated ones). No headless browsers required.",
   "main": "src/index.js",
   "bin": {

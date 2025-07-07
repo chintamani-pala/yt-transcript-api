@@ -3,10 +3,10 @@
 </h1>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/yt-transcript-api">
+  <a href="https://github.com/chintamani-pala/yt-transcript-api">
     <img src="https://img.shields.io/npm/v/v.svg" alt="NPM Version">
   </a>
-  <a href="https://www.npmjs.com/package/yt-transcript-api">
+  <a href="https://github.com/chintamani-pala/yt-transcript-api">
     <img src="https://img.shields.io/npm/dm/yt-transcript-api.svg" alt="NPM Downloads">
   </a>
 </p>
@@ -37,7 +37,6 @@
 ```bash
 npm install yt-transcript-api
 ```
-
 Or clone this repository and install dependencies:
 
 ```bash
@@ -45,35 +44,171 @@ git clone https://github.com/chintamani-pala/yt-transcript-api.git
 cd yt-transcript-api
 npm install
 ```
-
 ---
 
 ## Usage
 
-### As a Library (API)
+### Fetch Transcript (Default Language)
 
 ```js
-const {
-  YouTubeTranscriptApi,
-  TranscriptListFetcher,
-  ProxyConfig,
-  GenericProxyConfig,
-  WebshareProxyConfig,
-  InvalidProxyConfig,
-  formatters,
-  errors,
-  settings
-} = require('yt-transcript-api');
-
+const { YouTubeTranscriptApi } = require('yt-transcript-api');
 const ytt_api = new YouTubeTranscriptApi();
 const video_id = '0Okxsszt624';
 
-ytt_api.fetch(video_id, ['en']).then(transcript => {
+(async () => {
+    const transcript = await ytt_api.fetch(video_id);
     console.log(transcript);
-}).catch(err => {
-    console.error(err);
-});
+})();
 ```
+
+### Fetch Transcript (Specific Language)
+
+```js
+(async () => {
+    const transcript = await ytt_api.fetch(video_id, ["en"]);
+    console.log(transcript);
+})();
+```
+
+### Fetch Transcript (Unavailable Language)
+
+```js
+(async () => {
+    try {
+        await ytt_api.fetch(video_id, ["zz"]);
+    } catch (err) {
+        console.error("Transcript not found for requested language.");
+    }
+})();
+```
+
+### List Available Transcripts
+
+```js
+(async () => {
+    const list = await ytt_api.list(video_id);
+    console.log(list);
+})();
+```
+
+### Save Transcript to File
+
+```js
+const fs = require('fs');
+(async () => {
+    const transcript = await ytt_api.fetch(video_id, ["en"]);
+    fs.writeFileSync("transcript.json", JSON.stringify(transcript, null, 2));
+})();
+```
+
+### Format Transcript as JSON (Pretty)
+
+```js
+const { formatters } = require('yt-transcript-api');
+(async () => {
+    const transcript = await ytt_api.fetch(video_id, ["en"]);
+    const json = new formatters.JSONFormatter().formatTranscript(transcript, { space: 2 });
+    console.log(json);
+})();
+```
+
+### Format Transcript as SRT
+
+```js
+const { formatters } = require('yt-transcript-api');
+(async () => {
+    const transcript = await ytt_api.fetch(video_id, ["en"]);
+    const srt = new formatters.SRTFormatter().formatTranscript(transcript);
+    console.log(srt);
+})();
+```
+
+### Format Transcript as Text
+
+```js
+const { formatters } = require('yt-transcript-api');
+(async () => {
+    const transcript = await ytt_api.fetch(video_id, ["en"]);
+    const text = new formatters.TextFormatter().formatTranscript(transcript);
+    console.log(text);
+})();
+```
+
+### Format Transcript as Pretty Print
+
+```js
+const { formatters } = require('yt-transcript-api');
+(async () => {
+    const transcript = await ytt_api.fetch(video_id, ["en"]);
+    const pretty = new formatters.PrettyPrintFormatter().formatTranscript(transcript);
+    console.log(pretty);
+})();
+```
+
+### Format Transcript as WebVTT
+
+```js
+const { formatters } = require('yt-transcript-api');
+(async () => {
+    const transcript = await ytt_api.fetch(video_id, ["en"]);
+    const vtt = new formatters.WebVTTFormatter().formatTranscript(transcript);
+    console.log(vtt);
+})();
+```
+
+### Error Handling: Invalid Video ID
+
+```js
+(async () => {
+    try {
+        await ytt_api.fetch("invalid_video_id");
+    } catch (err) {
+        console.error("Invalid video ID.");
+    }
+})();
+```
+
+### Using a Proxy
+
+```js
+const { YouTubeTranscriptApi, GenericProxyConfig } = require('yt-transcript-api');
+const proxyConfig = new GenericProxyConfig("http://proxy:8080");
+const ytt_api = new YouTubeTranscriptApi({ proxy: proxyConfig });
+(async () => {
+    const transcript = await ytt_api.fetch(video_id, ["en"]);
+    console.log(transcript);
+})();
+```
+
+---
+
+## CLI Usage
+
+Fetch transcript and print as JSON:
+
+```bash
+npx yt-transcript-api 0Okxsszt624 --lang en --format json
+```
+
+List available languages:
+
+```bash
+npx yt-transcript-api 0Okxsszt624 --list
+```
+
+Fetch transcript in a different language:
+
+```bash
+npx yt-transcript-api 0Okxsszt624 --lang es --format text
+```
+
+Use a proxy:
+
+```bash
+npx yt-transcript-api 0Okxsszt624 --lang en --proxy http://proxy:8080
+```
+
+---
 
 #### API Exports
 
@@ -87,61 +222,58 @@ ytt_api.fetch(video_id, ['en']).then(transcript => {
 
 ---
 
-### CLI Usage
+## CLI Options
 
-You can use the CLI to fetch transcripts directly from the terminal.
+| Option / Flag                | Description                                                                                 |
+|------------------------------|---------------------------------------------------------------------------------------------|
+| `--video-ids <ids>`          | Comma-separated list of YouTube video IDs, or provide as positional arguments.               |
+| `--format <type>`            | Output format: `json`, `pretty`, `text`, `srt`, `webvtt`. Default: `pretty`.                |
+| `--languages <codes>`        | Comma-separated language codes (e.g. `en,hi`).                                              |
+| `--excludeManuallyCreated`   | Exclude manually created transcripts.                                                        |
+| `--excludeGenerated`         | Exclude auto-generated transcripts.                                                          |
+| `--httpProxy <url>`          | Use an HTTP proxy server (e.g. `http://proxy:8080`).                                        |
+| `--httpsProxy <url>`         | Use an HTTPS proxy server.                                                                  |
+| `--webshareProxyUsername <u>`| Username for Webshare proxy authentication.                                                  |
+| `--webshareProxyPassword <p>`| Password for Webshare proxy authentication.                                                  |
+| `--preserveFormatting`       | Preserve original transcript formatting (where available).                                   |
+| `--list`                     | List available transcript languages for the video.                                           |
 
-```bash
-npx yt-transcript-api --video-ids=0Okxsszt624 --format=json
-```
 
-#### CLI Options
-
-- `--video-ids` (comma-separated list or positional arguments)
-- `--format` (json, pretty, text, srt, webvtt)  
-  _Default: pretty_
-- `--languages` (comma-separated, e.g. `en,hi`)
-- `--excludeManuallyCreated`  
-- `--excludeGenerated`  
-- `--httpProxy`  
-- `--httpsProxy`  
-- `--webshareProxyUsername`  
-- `--webshareProxyPassword`  
-- `--preserveFormatting`  
-
-#### Example
-
-```bash
-npx yt-transcript-api --video-ids=0Okxsszt624 --format=json
-```
+**Note:**
+- Video IDs can be provided as a comma-separated list with `--video-ids` or as positional arguments.
+- Language codes can be provided as a comma-separated list with `--languages`.
 
 ---
 
-## Proxy Support
+## Supported Output Formats
 
-You can use proxies to bypass IP blocks.  
-Supports generic HTTP/HTTPS proxies and [Webshare](https://www.webshare.io/) rotating residential proxies.
-
-Example:
-
-```js
-const { GenericProxyConfig, YouTubeTranscriptApi } = require('yt-transcript-api');
-const proxyConfig = new GenericProxyConfig('http://your-proxy:port');
-const ytt_api = new YouTubeTranscriptApi({ proxyConfig });
-```
+- **json**: Raw transcript as JSON
+- **text**: Plain text transcript
+- **srt**: SubRip subtitle format
+- **webvtt**: Web Video Text Tracks format
+- **pretty**: Human-readable pretty print
 
 ---
 
-## Output Formats
+## Contributing
 
-- **pretty**: Node.js util.inspect
-- **json**: Raw JSON
-- **text**: Plain text
-- **srt**: SubRip Subtitle
-- **webvtt**: Web Video Text Tracks
+Contributions are welcome! To contribute:
+
+- Fork the repository and create your branch.
+- Make your changes with clear commit messages.
+- Ensure all tests pass (`npm test`).
+- Submit a pull request describing your changes.
+
+For major changes, please open an issue first to discuss what you would like to change.
 
 ---
 
+## Support / Contact
+
+- For bug reports or feature requests, please open an [issue on GitHub](https://github.com/chintamani-pala/yt-transcript-api/issues).
+- For questions, suggestions, or sponsorship, contact the author via [GitHub](https://github.com/chintamani-pala) or use the GitHub Sponsor button.
+
+---
 
 ## License
 
