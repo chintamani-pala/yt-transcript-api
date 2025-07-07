@@ -21,8 +21,8 @@ class CouldNotRetrieveTranscript extends YouTubeTranscriptApiException {
    static GITHUB_REFERRAL = (
       "\n\nIf you are sure that the described cause is not responsible for this error "
       + "and that a transcript should be retrievable, please create an issue at "
-      + "https://github.com/chintamani-pala/youtube-transcript-js/issues. "
-      + "Please add which version of youtube_transcript_api you are using "
+      + "https://github.com/chintamani-pala/yt-transcript-api/issues. "
+      + "Please add which version of yt-transcript-api you are using "
       + "and provide the information needed to replicate the error. "
       + "Also make sure that there are no open issues which already describe your problem!"
    );
@@ -129,9 +129,8 @@ class RequestBlocked extends CouldNotRetrieveTranscript {
       + "There are two things you can do to work around this:\n"
       + '1. Use proxies to hide your IP address, as explained in the "Working around '
       + 'IP bans" section of the README '
-      + "(https://github.com/chintamani-pala/youtube-transcript-js"
-      + "?tab=readme-ov-file"
-      + "#working-around-ip-bans-requestblocked-or-ipblocked-exception).\n"
+      + "(https://github.com/chintamani-pala/yt-transcript-api"
+      + "\n"
       + "2. (NOT RECOMMENDED) If you authenticate your requests using cookies, you "
       + "will be able to continue doing requests for a while. However, YouTube will "
       + "eventually permanently ban the account that you have used to authenticate "
@@ -146,7 +145,7 @@ class RequestBlocked extends CouldNotRetrieveTranscript {
       + "with a pool of >30M residential IPs (make sure to purchase "
       + '"Residential" proxies, NOT "Proxy Server" or "Static Residential"!).\n\n'
       + "You will find more information on how to easily integrate Webshare here: "
-      + "https://github.com/chintamani-pala/youtube-transcript-js"
+      + "https://github.com/chintamani-pala/yt-transcript-api"
       + "?tab=readme-ov-file#using-webshare"
    );
    static WITH_WEBSHARE_PROXY_CAUSE_MESSAGE = (
@@ -187,9 +186,8 @@ class IpBlocked extends RequestBlocked {
    static CAUSE_MESSAGE = (
       RequestBlocked.BASE_CAUSE_MESSAGE
       + 'Ways to work around this are explained in the "Working around IP '
-      + 'bans" section of the README (https://github.com/chintamani-pala/youtube-transcript-js'
+      + 'bans" section of the README (https://github.com/chintamani-pala/yt-transcript-api'
       + "?tab=readme-ov-file"
-      + "#working-around-ip-bans-requestblocked-or-ipblocked-exception).\n"
    );
    get cause() {
       return IpBlocked.CAUSE_MESSAGE;
@@ -208,7 +206,7 @@ class AgeRestricted extends CouldNotRetrieveTranscript {
       "This video is age-restricted. Therefore, you are unable to retrieve "
       + "transcripts for it without authenticating yourself.\n\n"
       + "Unfortunately, Cookie Authentication is temporarily unsupported in "
-      + "youtube-transcript-api-js, as recent changes in YouTube's API broke the previous "
+      + "yt-transcript-api, as recent changes in YouTube's API broke the previous "
       + "implementation. I will do my best to re-implement it as soon as possible."
    );
    get cause() {
