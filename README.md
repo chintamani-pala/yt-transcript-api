@@ -187,7 +187,7 @@ const ytt_api = new YouTubeTranscriptApi({ proxy: proxyConfig });
 Fetch transcript and print as JSON:
 
 ```bash
-npx yt-transcript-api 0Okxsszt624 --lang en --format json
+npx yt-transcript-api 0Okxsszt624 --languages en --format json
 ```
 
 List available languages:
@@ -199,13 +199,13 @@ npx yt-transcript-api 0Okxsszt624 --list
 Fetch transcript in a different language:
 
 ```bash
-npx yt-transcript-api 0Okxsszt624 --lang es --format text
+npx yt-transcript-api 0Okxsszt624 --languages es --format text
 ```
 
 Use a proxy:
 
 ```bash
-npx yt-transcript-api 0Okxsszt624 --lang en --proxy http://proxy:8080
+npx yt-transcript-api 0Okxsszt624 --languages en --proxy http://proxy:8080
 ```
 
 ---
@@ -226,7 +226,7 @@ npx yt-transcript-api 0Okxsszt624 --lang en --proxy http://proxy:8080
 
 | Option / Flag                | Description                                                                                 |
 |------------------------------|---------------------------------------------------------------------------------------------|
-| `--video-ids <ids>`          | Comma-separated list of YouTube video IDs, or provide as positional arguments.               |
+| `--videoIds <ids>`          | Comma-separated list of YouTube video IDs, or provide as positional arguments.               |
 | `--format <type>`            | Output format: `json`, `pretty`, `text`, `srt`, `webvtt`. Default: `pretty`.                |
 | `--languages <codes>`        | Comma-separated language codes (e.g. `en,hi`).                                              |
 | `--excludeManuallyCreated`   | Exclude manually created transcripts.                                                        |
@@ -236,7 +236,6 @@ npx yt-transcript-api 0Okxsszt624 --lang en --proxy http://proxy:8080
 | `--webshareProxyUsername <u>`| Username for Webshare proxy authentication.                                                  |
 | `--webshareProxyPassword <p>`| Password for Webshare proxy authentication.                                                  |
 | `--preserveFormatting`       | Preserve original transcript formatting (where available).                                   |
-| `--list`                     | List available transcript languages for the video.                                           |
 
 
 **Note:**
