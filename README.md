@@ -190,12 +190,6 @@ Fetch transcript and print as JSON:
 npx yt-transcript-api 0Okxsszt624 --languages en --format json
 ```
 
-List available languages:
-
-```bash
-npx yt-transcript-api 0Okxsszt624 --list
-```
-
 Fetch transcript in a different language:
 
 ```bash
